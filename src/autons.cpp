@@ -138,7 +138,7 @@ void drive_example() {
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
 
-  chassis.set_turn_pid(86, TURN_SPEED);
+  chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
 
   // chassis.set_drive_pid(-1, DRIVE_SPEED);
@@ -150,14 +150,21 @@ void drive_example() {
   chassis.set_drive_pid(19.5, DRIVE_SPEED);
   chassis.wait_drive();
 
+  chassis.reset_pid_targets(); // Resets PID targets to 0
+  chassis.reset_gyro(); // Reset gyro position to 0
+  chassis.reset_drive_sensor(); // Reset drive sensors to 0
+
+  chassis.set_turn_pid(-6, TURN_SPEED);
+  chassis.wait_drive();
+
   intake.move_velocity(20);
 
   // temporarily move flywheel to max speed
-  flywheel.move_velocity(-1 * 200);
+  // flywheel.move_velocity(-1 * 200);
 
   pros::delay(3000);
 
-  flywheel.move_velocity(-0.45 * 200);
+  // flywheel.move_velocity(-0.45 * 200);
 
   intake.move_velocity(0);
 
@@ -195,7 +202,7 @@ void drive_example() {
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
 
-  chassis.set_turn_pid(86, TURN_SPEED);
+  chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
 
   // chassis.set_drive_pid(-1, DRIVE_SPEED);
@@ -208,10 +215,17 @@ void drive_example() {
   chassis.set_drive_pid(19.5, DRIVE_SPEED);
   chassis.wait_drive();
 
+  chassis.reset_pid_targets(); // Resets PID targets to 0
+  chassis.reset_gyro(); // Reset gyro position to 0
+  chassis.reset_drive_sensor(); // Reset drive sensors to 0
+
+  chassis.set_turn_pid(5, TURN_SPEED);
+  chassis.wait_drive();
+
   intake.move_velocity(20);
 
   // temporarily move flywheel to max speed
-  flywheel.move_velocity(-1 * 200);
+  // flywheel.move_velocity(-1 * 200);
 
   pros::delay(3000);
 
