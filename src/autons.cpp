@@ -84,20 +84,23 @@ void drive_example() {
   // chassis.set_drive_pid(-12, DRIVE_SPEED);
   // chassis.wait_drive();
 
-  flywheel.move_velocity(-0.45 * 200);
+  // chassis.set_drive_pid(2, DRIVE_SPEED);
+  // chassis.wait_drive();
 
-  chassis.set_drive_pid(2, DRIVE_SPEED);
-  chassis.wait_drive();
+  // chassis.set_turn_pid(86, TURN_SPEED);
+  // chassis.wait_drive();
 
-  chassis.set_turn_pid(87, TURN_SPEED);
-  chassis.wait_drive();
+  // chassis.set_drive_pid(18, DRIVE_SPEED);
+  // chassis.wait_drive();
 
-  chassis.set_drive_pid(18, DRIVE_SPEED);
+  // pros::delay(2000);
+
+  // flywheel.move_velocity(-0.45 * 200);
+
+  chassis.set_drive_pid(6, DRIVE_SPEED);
   chassis.wait_drive();
 
   pros::delay(2000);
-
-  chassis.set_drive_pid(6, DRIVE_SPEED);
 
   intake.move_velocity(30);  
 
@@ -105,11 +108,116 @@ void drive_example() {
 
   intake.move_velocity(0);
 
-  chassis.set_drive_pid(-18, DRIVE_SPEED);
+  chassis.set_drive_pid(-22.25, DRIVE_SPEED);
   chassis.wait_drive();
 
   chassis.set_turn_pid(-87, TURN_SPEED);
   chassis.wait_drive();
+
+  // hit the wall for self correct
+  chassis.set_drive_pid(-3.5, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(1.25, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  // 3 one-second intervals of intake
+  for (int i = 0; i < 3; i++) {
+    intake.move_velocity(-200);
+    pros::delay(1000);
+    intake.move_velocity(0);
+    pros::delay(10);
+  }
+
+  intake.move_velocity(-200);
+
+  chassis.set_drive_pid(0.75, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  chassis.reset_pid_targets(); // Resets PID targets to 0
+  chassis.reset_gyro(); // Reset gyro position to 0
+  chassis.reset_drive_sensor(); // Reset drive sensors to 0
+
+  chassis.set_turn_pid(86, TURN_SPEED);
+  chassis.wait_drive();
+
+  // chassis.set_drive_pid(-1, DRIVE_SPEED);
+  // chassis.wait_drive();
+
+  pros::delay(2200);
+  intake.move_velocity(0);
+
+  chassis.set_drive_pid(19.5, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  intake.move_velocity(20);
+
+  // temporarily move flywheel to max speed
+  flywheel.move_velocity(-1 * 200);
+
+  pros::delay(3000);
+
+  flywheel.move_velocity(-0.45 * 200);
+
+  intake.move_velocity(0);
+
+  chassis.set_drive_pid(-19.5, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  chassis.reset_pid_targets(); // Resets PID targets to 0
+  chassis.reset_gyro(); // Reset gyro position to 0
+  chassis.reset_drive_sensor(); // Reset drive sensors to 0
+
+  chassis.set_turn_pid(-86, TURN_SPEED);
+  chassis.wait_drive();
+
+  // hit the wall for self correct
+  chassis.set_drive_pid(-3.5, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  chassis.set_drive_pid(1.25, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  // 3 one-second intervals of intake
+  for (int i = 0; i < 3; i++) {
+    intake.move_velocity(-200);
+    pros::delay(800);
+    intake.move_velocity(0);
+    pros::delay(10);
+  }
+
+  intake.move_velocity(-200);
+
+  chassis.set_drive_pid(0.75, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  chassis.reset_pid_targets(); // Resets PID targets to 0
+  chassis.reset_gyro(); // Reset gyro position to 0
+  chassis.reset_drive_sensor(); // Reset drive sensors to 0
+
+  chassis.set_turn_pid(86, TURN_SPEED);
+  chassis.wait_drive();
+
+  // chassis.set_drive_pid(-1, DRIVE_SPEED);
+  // chassis.wait_drive();
+
+  // finish intaking
+  pros::delay(2200);
+  intake.move_velocity(0);
+
+  chassis.set_drive_pid(19.5, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  intake.move_velocity(20);
+
+  // temporarily move flywheel to max speed
+  flywheel.move_velocity(-1 * 200);
+
+  pros::delay(3000);
+
+  flywheel.move_velocity(-0.45 * 200);
+
+  intake.move_velocity(0);
 
 
 
