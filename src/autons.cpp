@@ -86,16 +86,16 @@ void drive_example() {
 
   flywheel.move_velocity(-0.45 * 200);
 
-  // chassis.set_drive_pid(2, DRIVE_SPEED);
-  // chassis.wait_drive();
+  chassis.set_drive_pid(2, DRIVE_SPEED);
+  chassis.wait_drive();
 
-  // chassis.set_turn_pid(87, TURN_SPEED);
-  // chassis.wait_drive();
+  chassis.set_turn_pid(87, TURN_SPEED);
+  chassis.wait_drive();
 
-  // chassis.set_drive_pid(18, DRIVE_SPEED);
-  // chassis.wait_drive();
+  chassis.set_drive_pid(18, DRIVE_SPEED);
+  chassis.wait_drive();
 
-  // pros::delay(2000);
+  pros::delay(2000);
 
   chassis.set_drive_pid(6, DRIVE_SPEED);
 
