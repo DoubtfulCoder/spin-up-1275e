@@ -131,7 +131,8 @@ void opcontrol()
   bool expansionEnabled = false;
 
   // flywheel constants
-  const float FLYWHEEL_IDLE = 0.3 * -200;
+  const float FLYWHEEL_IDLE = 0 * -200;
+  const float FLYWHEEL_SHOOT = 0.75 * -200;
   const float FLYWHEEL_MAX = 1.0 * -200;
 
   // main op loop
@@ -172,6 +173,10 @@ void opcontrol()
     if (master.get_digital(DIGITAL_R1))
     {
       flywheel.move(FLYWHEEL_MAX);
+    }
+    else if (master.get_digital(DIGITAL_L1))
+    {
+      flywheel.move(FLYWHEEL_SHOOT);
     }
     else
     {
