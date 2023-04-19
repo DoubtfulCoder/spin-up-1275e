@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "EZ-Template-Example",
+    "project_name": "1275 Code",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -189,7 +189,9 @@
       }
     },
     "upload_options": {
-      "slot": 3
+      "slot": 1,
+      "description": "Brown bandits",
+      "icon": "ufo"
     }
   }
 }

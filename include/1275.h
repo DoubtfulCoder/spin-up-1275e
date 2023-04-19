@@ -13,10 +13,10 @@ extern pros::ADIDigitalOut expansion2;
 // extern pros::IMU imu_sensor;
 
 // /* Drive */
-// extern pros::Motor backLeft;
-// extern pros::Motor midLeft;
-// extern pros::Motor frontLeft;
+extern pros::Motor backLeft;
+extern pros::Motor midLeft;
+extern pros::Motor frontLeft;
 
-// extern pros::Motor backRight;
-// extern pros::Motor midRight;
-// extern pros::Motor frontRight;
+extern pros::Motor backRight;
+extern pros::Motor midRight;
+extern pros::Motor frontRight;

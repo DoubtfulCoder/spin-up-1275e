@@ -8,6 +8,9 @@ extern pros::Motor flywheel;
 extern pros::Motor intake;
 
 
+void rightAuton();
+void left1();
+void left2();
 void drive_example();
 void turn_example();
 void drive_and_turn();
