@@ -16,10 +16,10 @@ pros::ADIDigitalOut expansion2('C');
 // extern pros::IMU imu_sensor;
 
 // /* Drive */
-// extern pros::Motor backLeft;
-// extern pros::Motor midLeft;
-// extern pros::Motor frontLeft;
+pros::Motor backLeft(20, true);
+pros::Motor midLeft(19, true);
+pros::Motor frontLeft(18, true);
 
-// extern pros::Motor backRight;
-// extern pros::Motor midRight;
-// extern pros::Motor frontRight;
+pros::Motor backRight(2);
+pros::Motor midRight(3);
+pros::Motor frontRight(12);
