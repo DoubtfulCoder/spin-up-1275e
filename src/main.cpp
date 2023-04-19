@@ -185,7 +185,7 @@ void opcontrol()
     }
     else if (master.get_digital(DIGITAL_A))
     {
-      intake.move(25);
+      intake.move(100);
     }
     else
     {
