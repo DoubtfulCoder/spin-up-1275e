@@ -29,11 +29,6 @@ void initialize()
   expansion1.set_value(false);
   expansion2.set_value(false);
 
-  pros::delay(500);
-
-  // Print our branding over your terminal :D
-  ez::print_ez_template();
-
   pros::delay(500); // Stop the user from doing anything while legacy ports configure.
 
   // Configure your chassis controls
@@ -53,6 +48,7 @@ void initialize()
       Auton("Example Drive\n\nDrive forward and come back.", left2),
       Auton("Example Turn\n\nTurn 3 times.", left1),
       Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
+      Auton("TAS Recording", autontas),
   });
 
   // Initialize chassis and auton selector

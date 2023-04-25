@@ -7,7 +7,6 @@ extern Drive chassis;
 extern pros::Motor flywheel;
 extern pros::Motor intake;
 
-
 void rightAuton();
 void left1();
 void left2();
@@ -24,3 +23,5 @@ void one_mogo_constants();
 void two_mogo_constants();
 void exit_condition_defaults();
 void modified_exit_condition();
+
+void autontas();
