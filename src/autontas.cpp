@@ -63,7 +63,7 @@ void autontas()
     // wait for next frame
     int timeNow = pros::millis();
     int timeElapsed = timeNow - timeLastFrame;
-    int timeToWait = 50 - timeElapsed;
+    int timeToWait = 20 - timeElapsed;
     if (timeToWait > 0)
     {
       pros::delay(timeToWait);
