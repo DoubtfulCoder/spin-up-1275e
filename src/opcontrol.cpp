@@ -8,7 +8,7 @@
 #include "lib/saves/writeRunfile.h"
 #include "lib/saves/writeBindings.h"
 
-const int MinuteTicks = (60 * 1000) / 50;
+const int MinuteTicks = (60 * 1000) / 20;
 
 /**
  * Opcontrol
@@ -77,10 +77,10 @@ void opcontrol()
       }
     }
 
-    // delay to keep loop at 50ms
+    // delay to keep loop at 20ms
     int timeNow = pros::millis();
     int timeSinceLastFrame = timeNow - timeLastFrame;
-    int timeToDelay = 50 - timeSinceLastFrame;
+    int timeToDelay = 20 - timeSinceLastFrame;
     if (timeToDelay > 0)
     {
       pros::delay(timeToDelay);
