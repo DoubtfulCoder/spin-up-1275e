@@ -1,8 +1,8 @@
 #include "getBindings.h"
 
-std::vector<std::pair<std::string, std::string>> getBindings()
+std::map<std::string, std::string> getBindings()
 {
-  std::vector<std::pair<std::string, std::string>> bindings;
+  std::map<std::string, std::string> bindings;
   std::ifstream bindingsFile("/usd/bindings.txt");
 
   if (bindingsFile.is_open())
@@ -15,7 +15,7 @@ std::vector<std::pair<std::string, std::string>> getBindings()
       std::string label = line.substr(0, delimPos);
       std::string file = line.substr(delimPos + 1);
 
-      bindings.push_back({label, file});
+      bindings[label] = file;
     }
   }
 

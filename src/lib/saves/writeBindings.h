@@ -4,4 +4,4 @@
 #include <vector>
 #include <map>
 
-std::map<std::string, std::string> getBindings();
+void writeBindings(std::map<std::string, std::string> bindings);
