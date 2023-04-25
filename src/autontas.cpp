@@ -4,7 +4,18 @@
 #include "lib/saves/getBindings.h"
 #include "lib/replay/decodeControllerState.h"
 #include "lib/util/fromBase64.h"
+#include "lib/util/toBase64.h"
 #include "lib/saves/readRunfile.h"
+
+void printBitset(std::bitset<44> bits)
+{
+  std::string k;
+  for (int i = 0; i < 44; i++)
+  {
+    k += std::to_string(bits[i]);
+  }
+  printf("%s\n", k.c_str());
+}
 
 void autontas()
 {
@@ -24,10 +35,12 @@ void autontas()
   // decode the run
   for (std::string encodedState : encodedRun)
   {
+
     std::bitset<44> stateBits = fromBase64(encodedState);
     ControllerState state = decodeControllerState(stateBits);
     run.push_back(state);
   }
+  printf("Verify success!");
 
   // execute the run
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
@@ -60,4 +73,8 @@ void autontas()
     // increment tick
     tick++;
   }
+
+  // set last tick to do nothing
+  ControllerState stop = {};
+  executeFrame(stop);
 }
