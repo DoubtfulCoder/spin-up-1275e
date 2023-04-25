@@ -8,7 +8,7 @@ void executeFrame(ControllerState state)
   // Drive control
 
   // if left stick is active
-  int joyX, joyY;
+  float joyX, joyY;
   if (std::abs(state.left.x) > 10 || std::abs(state.left.y) > 10)
   {
     joyX = state.left.x;
@@ -26,51 +26,45 @@ void executeFrame(ControllerState state)
   joyX = std::abs(joyX) < 10 ? 0 : joyX * 0.4;
   joyY = std::abs(joyY) < 10 ? 0 : joyY;
 
-  // applies a power curve while preserving direction
-  joyY = (joyX != 0 ? 0.4 : 1) * joyY;
+  // slow speed
+  slowSpeedEnabled = state.L2;
 
   // compute motor power
-  int slowSpeedMultipler = slowSpeedEnabled ? 0.2 : 1.0;
+  float slowSpeedMultipler = slowSpeedEnabled ? 0.5 : 1.0;
   int leftSidePower = slowSpeedMultipler * (joyY + joyX);
   int rightSidePower = slowSpeedMultipler * (joyY - joyX);
 
   // set motor power
-  frontLeft.move(leftSidePower);
-  backLeft.move(leftSidePower);
-  midLeft.move(leftSidePower);
-  frontRight.move(rightSidePower);
-  backRight.move(rightSidePower);
-  midRight.move(rightSidePower);
-
-  // slow speed
-  slowSpeedEnabled = state.L2;
+  frontLeft.move_velocity(leftSidePower);
+  backLeft.move_velocity(leftSidePower);
+  midLeft.move_velocity(leftSidePower);
+  frontRight.move_velocity(rightSidePower);
+  backRight.move_velocity(rightSidePower);
+  midRight.move_velocity(rightSidePower);
 
   // flywheel speed control
   if (state.R1)
   {
-    flywheel.move(FLYWHEEL_MAX);
+    intake.move_velocity(175);
+    flywheel.move_velocity(FLYWHEEL_MAX);
   }
-  else if (state.L1)
+  else if (state.A)
   {
-    flywheel.move(FLYWHEEL_SHOOT);
+    flywheel.move_velocity(FLYWHEEL_SHOOT);
   }
   else
   {
-    flywheel.move(FLYWHEEL_IDLE);
+    flywheel.move_velocity(FLYWHEEL_IDLE);
   }
 
   // intake control
-  if (state.A)
+  if (state.R2)
   {
-    intake.move(-127);
+    intake.move_velocity(-127);
   }
-  else if (state.R2)
+  else if(!state.R1)
   {
-    intake.move(100);
-  }
-  else
-  {
-    intake.move(0);
+    intake.move_velocity(0);
   }
 
   // expansion
