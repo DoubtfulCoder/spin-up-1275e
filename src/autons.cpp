@@ -304,21 +304,23 @@ void left2() {
   chassis.set_drive_pid(-3, DRIVE_SPEED);
   chassis.wait_drive();
 
-  turn(75);
+  turn(-75);
 
-  // shoot into low goal
+  // shoot 2 preloads into high goal
+  flywheel.move_velocity(-1 * 200);
+  pros::delay(500);
   intake.move_velocity(30);
   pros::delay(2000);
 
   intake.move_velocity(0);
-  flywheel.move_velocity(-1 * 200);
 
-  turn(105);
+  // turn to face the disks
+  turn(-105);
 
   // go back and intake them disks
   intake.move_velocity(-100);
 
-  chassis.set_drive_pid(-20, 50);
+  chassis.set_drive_pid(-20, 50); // intake
   chassis.wait_drive();
 
   pros::delay(2000);
@@ -326,7 +328,7 @@ void left2() {
   intake.move_velocity(0);
 
   // turn to high goal and shoot them disks
-  turn(102);
+  turn(90);
   chassis.set_drive_pid(6.5, DRIVE_SPEED);
   chassis.wait_drive();
 
