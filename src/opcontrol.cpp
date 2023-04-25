@@ -12,6 +12,8 @@ void opcontrol()
 {
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
 
+  expansion1.set_value(false);
+  expansion2.set_value(false);
 
   // main op loop
   int timeLastFrame = pros::millis();

@@ -26,8 +26,8 @@ Drive chassis(
 void initialize()
 {
   // Set expansion pistons down
-  expansion1.set_value(true);
-  expansion2.set_value(true);
+  expansion1.set_value(false);
+  expansion2.set_value(false);
 
   pros::delay(500);
 
@@ -82,8 +82,8 @@ void disabled()
 void competition_initialize()
 {
   // Set expansion pistons down
-  expansion1.set_value(true);
-  expansion2.set_value(true);
+  expansion1.set_value(false);
+  expansion2.set_value(false);
 
   pros::delay(500);
 }

@@ -12,12 +12,12 @@ void executeFrame(ControllerState state)
   int joyY = state.left.y;
 
   // deadzone n<20
-  joyX = std::abs(joyX) < 20 ? 0 : joyX;
-  joyY = std::abs(joyY) < 20 ? 0 : joyY;
+  joyX = std::abs(joyX) < 10 ? 0 : joyX;
+  joyY = std::abs(joyY) < 10 ? 0 : joyY;
 
   // applies a power curve while preserving direction
-  joyX = (joyX < 0 ? -1 : 1) * 0.65 * joyX * joyX;
-  joyY = (joyY < 0 ? -1 : 1) * joyY * joyY;
+  // joyX = (joyX < 0 ? -1 : 1) * 0.65 * joyX * joyX;
+  // joyY = (joyY < 0 ? -1 : 1) * joyY * joyY;
 
   // compute motor power
   int slowSpeedMultipler = slowSpeedEnabled ? 0.2 : 1.0;
@@ -65,6 +65,11 @@ void executeFrame(ControllerState state)
 
   // expansion
   if (state.LEFT && state.RIGHT)
+  {
+    expansion1.set_value(true);
+    expansion2.set_value(true);
+  }
+  else
   {
     expansion1.set_value(false);
     expansion2.set_value(false);
