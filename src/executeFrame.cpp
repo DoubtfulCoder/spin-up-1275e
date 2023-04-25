@@ -7,17 +7,27 @@ void executeFrame(ControllerState state)
 
   // Drive control
 
+  // if left stick is active
+  int joyX, joyY;
+  if (std::abs(state.left.x) > 10 || std::abs(state.left.y) > 10)
+  {
+    joyX = state.left.x;
+    joyY = state.left.y;
+  }
+  else
+  {
+    joyX = state.right.x;
+    joyY = state.right.y * -1;
+  }
+
   // get joystick values
-  int joyX = state.left.x;
-  int joyY = state.left.y;
 
   // deadzone n<20
-  joyX = std::abs(joyX) < 10 ? 0 : joyX;
+  joyX = std::abs(joyX) < 10 ? 0 : joyX * 0.4;
   joyY = std::abs(joyY) < 10 ? 0 : joyY;
 
   // applies a power curve while preserving direction
-  // joyX = (joyX < 0 ? -1 : 1) * 0.65 * joyX * joyX;
-  // joyY = (joyY < 0 ? -1 : 1) * joyY * joyY;
+  joyY = (joyX != 0 ? 0.4 : 1) * joyY;
 
   // compute motor power
   int slowSpeedMultipler = slowSpeedEnabled ? 0.2 : 1.0;
@@ -50,11 +60,11 @@ void executeFrame(ControllerState state)
   }
 
   // intake control
-  if (state.R2)
+  if (state.A)
   {
     intake.move(-127);
   }
-  else if (state.A)
+  else if (state.R2)
   {
     intake.move(100);
   }
