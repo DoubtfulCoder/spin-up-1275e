@@ -219,8 +219,8 @@ void opcontrol()
         }
 
         // drive curve
-        int neg_x = -1 ? x < 0 : 1;
-        int neg_y = -1 ? y < 0 : 1;
+        int neg_x = x < 0 ? -1 : 1;
+        int neg_y = y < 0 ? -1 : 1;
 
         x /= 127;
         y /= 127;
