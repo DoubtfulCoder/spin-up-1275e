@@ -5,7 +5,8 @@
 // extern pros::Controller master;
 
 /* Game System Motors */
-pros::Motor flywheel(11);
+// pros::Motor flywheel(11);
+pros::Motor flywheel(13);
 pros::Motor intake(1);
 
 /* Pistons */

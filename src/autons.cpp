@@ -100,6 +100,10 @@ void spin_roller_half()
   pros::delay(500);
 }
 
+void spin_roller_long_way()
+{
+}
+
 void drive_example() {}
 
 void rightAuton()
@@ -166,6 +170,7 @@ void left2()
 {
   flywheel.move_velocity(-0.5 * 200);
   spin_roller_half();
+  // spin_roller_long_way(); // to not miss up flywheel
 
   chassis.set_drive_pid(4, DRIVE_SPEED);
   chassis.wait_drive();
