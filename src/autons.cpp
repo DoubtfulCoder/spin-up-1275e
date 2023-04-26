@@ -340,6 +340,46 @@ void left2() {
 
 }
 
+void right1() {
+  flywheel.move_velocity(0.5 * -200);
+
+  // forward towards goal
+  chassis.set_drive_pid(18, DRIVE_SPEED);
+  chassis.wait_drive();
+
+  // shoot 2 preloads into high goal
+  flywheel.move_velocity(-1 * 200);
+  pros::delay(500);
+  intake.move_velocity(30);
+  pros::delay(2000);
+
+  intake.move_velocity(0);
+
+  // turn towards 3 disks
+  turn(90);
+
+  // go back and intake them disks
+  intake.move_velocity(-100);
+
+  const double ONE_TILE_HYPOTENUSE_LENGTH = 25.46;
+
+  chassis.set_drive_pid(ONE_TILE_HYPOTENUSE_LENGTH + 5, 50); // intake
+  chassis.wait_drive();
+
+  // turn and shoot
+  turn(-90);
+  pros::delay(500);
+  intake.move_velocity(30);
+  pros::delay(2000);
+
+  // roller
+  turn(90);
+  chassis.set_drive_pid(ONE_TILE_HYPOTENUSE_LENGTH * 3, DRIVE_SPEED); // forward towards roller
+  chassis.wait_drive();
+  spin_roller_half();
+
+}
+
 void left1() {
  // spin_roller2();
 

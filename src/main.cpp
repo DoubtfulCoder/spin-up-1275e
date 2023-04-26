@@ -44,8 +44,8 @@ void initialize()
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-      Auton("TAS Recording", autontas),
       Auton("Left auton", left2),
+      Auton("TAS Recording", autontas),
       Auton("Example Drive\n\nDrive forward and come back.", left2),
       Auton("Example Turn\n\nTurn 3 times.", left1),
       Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
