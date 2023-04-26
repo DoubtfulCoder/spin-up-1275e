@@ -177,7 +177,7 @@ void opcontrol()
 
     bool left_arrow_pressed = false;
 
-    const double FLYWHEEL_SPEED_PERCENT = 0.76;
+    const double FLYWHEEL_SPEED_PERCENT = 0.46;
 
     while (true)
     {
@@ -247,14 +247,19 @@ void opcontrol()
             {
                 flywheel.move_velocity(0);
                 currently_shooting = false;
+                printf("This was triggered!\n");
             }
             else
             {
                 flywheel.move_velocity(FLYWHEEL_SPEED_PERCENT * -200);
                 currently_shooting = true;
+
+                printf("This was triggered 1\n!");
             }
             pros::delay(300);
         }
+
+        printf("Flywheel vel: %d\n", flywheel.get_actual_velocity());
 
         // intake
         if (master.get_digital(DIGITAL_R2))
