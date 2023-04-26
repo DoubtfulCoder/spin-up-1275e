@@ -1,81 +1,120 @@
 #include "executeFrame.h"
 
-void executeFrame(ControllerState state)
+void executeFrame(ControllerState state, statefulValues &lastState)
 {
 
-  bool slowSpeedEnabled = false;
+  double x = state.left.x;
+  double y = state.right.y;
 
-  // Drive control
-
-  // if left stick is active
-  float joyX, joyY;
-  if (std::abs(state.left.x) > 10 || std::abs(state.left.y) > 10)
+  // Deadzone
+  if (abs(x) < 20)
   {
-    joyX = state.left.x;
-    joyY = state.left.y;
+    x = 0;
+  }
+  if (abs(y) < 20)
+  {
+    y = 0;
+  }
+
+  // Slow Speed
+  if (state.L2)
+  {
+    lastState.slow_speed = true;
   }
   else
   {
-    joyX = state.right.x;
-    joyY = state.right.y * -1;
+    lastState.slow_speed = false;
   }
 
-  // get joystick values
-
-  // deadzone n<20
-  joyX = std::abs(joyX) < 10 ? 0 : joyX * 0.4;
-  joyY = std::abs(joyY) < 10 ? 0 : joyY;
-
-  // slow speed
-  slowSpeedEnabled = state.L2;
-
-  // compute motor power
-  float slowSpeedMultipler = slowSpeedEnabled ? 0.5 : 1.0;
-  int leftSidePower = slowSpeedMultipler * (joyY + joyX);
-  int rightSidePower = slowSpeedMultipler * (joyY - joyX);
-
-  // set motor power
-  frontLeft.move_velocity(leftSidePower);
-  backLeft.move_velocity(leftSidePower);
-  midLeft.move_velocity(leftSidePower);
-  frontRight.move_velocity(rightSidePower);
-  backRight.move_velocity(rightSidePower);
-  midRight.move_velocity(rightSidePower);
-
-  // flywheel speed control
-  if (state.R1)
+  double multiplier = 1.0;
+  if (lastState.slow_speed)
   {
-    intake.move_velocity(175);
-    flywheel.move_velocity(FLYWHEEL_MAX);
-  }
-  else if (state.A)
-  {
-    flywheel.move_velocity(FLYWHEEL_SHOOT);
-  }
-  else
-  {
-    flywheel.move_velocity(FLYWHEEL_IDLE);
+    multiplier = 0.2;
   }
 
-  // intake control
+  // drive curve
+  int neg_x = x < 0 ? -1 : 1;
+  int neg_y = y < 0 ? -1 : 1;
+
+  x /= 127;
+  y /= 127;
+
+  y = neg_y * y * y;
+  x = neg_x * 0.65 * x * x;
+
+  x *= 127;
+  y *= 127;
+
+  // Left Side
+  frontLeft.move(multiplier * (y + x));
+  backLeft.move(multiplier * (y + x));
+  midLeft.move(multiplier * (y + x));
+  // Right Side
+  frontRight.move(multiplier * (y - x));
+  backRight.move(multiplier * (y - x));
+  midRight.move(multiplier * (y - x));
+
+  // shoot
+  if (state.A)
+  {
+    if (lastState.currently_shooting)
+    {
+      flywheel.move_velocity(0);
+      lastState.currently_shooting = false;
+      printf("This was triggered!\n");
+    }
+    else
+    {
+      flywheel.move_velocity(FLYWHEEL_SPEED_PERCENT * -200);
+      lastState.currently_shooting = true;
+
+      printf("This was triggered 1\n!");
+    }
+    pros::delay(300);
+  }
+
+  printf("Flywheel vel: %d\n", flywheel.get_actual_velocity());
+
+  // intake
   if (state.R2)
   {
-    intake.move_velocity(-127);
+    intake.move_velocity(-200);
   }
-  else if(!state.R1)
+  else if (state.L1)
   {
-    intake.move_velocity(0);
+    // roller
+    intake.move_velocity(200);
   }
-
-  // expansion
-  if (state.LEFT && state.RIGHT)
+  else if (state.R1)
   {
-    expansion1.set_value(true);
-    expansion2.set_value(true);
+    // indexer
+    lastState.currently_indexing = true;
+    intake.move_velocity(25);
+    flywheel.move_velocity(-1 * 200); // move flywheel up to max power
   }
   else
   {
-    expansion1.set_value(false);
-    expansion2.set_value(false);
+    intake.move_velocity(0);
+    if (lastState.currently_indexing)
+    {
+      lastState.currently_indexing = false;
+      flywheel.move_velocity(FLYWHEEL_SPEED_PERCENT * -200); // move back to normal speed
+    }
+  }
+
+  // expansion shift key
+  if (state.LEFT)
+  {
+    // shift key for not accidentally activating expansion
+    lastState.left_arrow_pressed = true;
+  }
+  // actual expansion
+  if (state.RIGHT && lastState.left_arrow_pressed)
+  {
+    // if (state.LEFT)) {
+    // expansion_value = !expansion_value;
+    expansion1.set_value(true);
+    expansion2.set_value(true);
+    pros::delay(3000);
   }
 }

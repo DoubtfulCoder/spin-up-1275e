@@ -33,13 +33,14 @@ void opcontrol()
   bool hasDumped = false;
   int tick = 0;
   int timeLastFrame = pros::millis();
+  statefulValues k = {};
   while (true)
   {
     // get controller state
     ControllerState state = getControllerState();
 
     // execute frame
-    executeFrame(state);
+    executeFrame(state, k);
 
     // dump run when all bumpers are pressed OR 1 minute has passed
     bool allBumpers = state.L1 && state.L2 && state.R1 && state.R2;

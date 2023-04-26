@@ -49,13 +49,14 @@ void autontas()
 
   int tick = 0;
   int timeLastFrame = pros::millis();
+  statefulValues k = {};
   while (tick < run.size())
   {
     // get controller state
     ControllerState state = run[tick];
 
     // execute frame
-    executeFrame(state);
+    executeFrame(state, k);
 
     // print frame
     printf("Frame %d: %s\n", tick, encodedRun[tick].c_str());
@@ -76,5 +77,5 @@ void autontas()
 
   // set last tick to do nothing
   ControllerState stop = {};
-  executeFrame(stop);
+  executeFrame(stop, k);
 }
